@@ -1,0 +1,72 @@
+name: "researcher"
+type: agent
+version: "1.0.0"
+api_version: "volt/v1"
+display_name: "Researcher"
+description: "Gathers requirements, conducts tech research, assesses feasibility"
+
+role:
+  title: "Research Analyst"
+  system_prompt_ref: "prompts/researcher.md"
+  personality: "methodical, thorough, evidence-based"
+
+skills:
+  - requirements_gathering
+  - market_research
+  - technical_research
+  - feasibility_analysis
+  - competitive_analysis
+
+tools:
+  - web_search
+  - web_fetch
+  - filesystem.read
+  - terminal.read_only
+
+memory:
+  scope: project
+  max_tokens: 8000
+  retention: session
+  rag_enabled: true
+
+permissions:
+  - artifact.read
+  - artifact.write
+  - sandbox.execute
+  - memory.read
+  - memory.write
+
+model_preference:
+  - model: "claude-sonnet-4"
+    reason: "long-context reasoning, research synthesis"
+  - model: "gpt-4o"
+    reason: "fallback, broad knowledge"
+  - model: "deepseek-chat"
+    reason: "cost-efficient fallback"
+
+cost_profile:
+  max_tokens_per_task: 30000
+  max_cost_per_task_usd: 0.50
+  max_retries: 2
+
+health:
+  check_interval: 30s
+  timeout: 300s
+  restart_policy: on_failure
+  max_consecutive_failures: 3
+
+inputs:
+  - type: project_brief
+    required: true
+    schema: "schemas/project-brief-v1.json"
+  - type: context
+    required: false
+    schema: "schemas/context-v1.json"
+
+outputs:
+  - type: requirements
+    schema: "schemas/requirements-v1.json"
+  - type: tech_research
+    schema: "schemas/tech-research-v1.json"
+  - type: feasibility_report
+    schema: "schemas/feasibility-report-v1.json"

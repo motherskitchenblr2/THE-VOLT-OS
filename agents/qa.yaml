@@ -1,0 +1,69 @@
+name: "qa"
+type: agent
+version: "1.0.0"
+api_version: "volt/v1"
+display_name: "QA Engineer"
+description: "Testing, validation, edge cases, UX review"
+
+role:
+  title: "QA Engineer"
+  system_prompt_ref: "prompts/qa.md"
+  personality: "thorough, skeptical, quality-focused"
+
+skills:
+  - unit_testing
+  - integration_testing
+  - e2e_testing
+  - security_testing
+  - ux_review
+  - performance_testing
+
+tools:
+  - filesystem.read
+  - terminal.execute
+  - browser_automation
+  - sandbox.execute
+
+memory:
+  scope: project
+  max_tokens: 8000
+  retention: session
+  rag_enabled: false
+
+permissions:
+  - artifact.read
+  - artifact.write
+  - sandbox.execute
+  - terminal.execute
+
+model_preference:
+  - model: "gpt-4o"
+    reason: "broad test pattern knowledge"
+  - model: "claude-sonnet-4"
+    reason: "fallback"
+
+cost_profile:
+  max_tokens_per_task: 40000
+  max_cost_per_task_usd: 0.80
+  max_retries: 1
+
+health:
+  check_interval: 30s
+  timeout: 600s
+  restart_policy: on_failure
+  max_consecutive_failures: 3
+
+inputs:
+  - type: code
+    required: true
+    schema: "schemas/code-v1.json"
+  - type: architecture_spec
+    required: true
+    schema: "schemas/architecture-spec-v1.json"
+  - type: requirements
+    required: true
+    schema: "schemas/requirements-v1.json"
+
+outputs:
+  - type: test_report
+    schema: "schemas/test-report-v1.json"

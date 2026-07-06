@@ -1,0 +1,75 @@
+name: "backend_dev"
+type: agent
+version: "1.0.0"
+api_version: "volt/v1"
+display_name: "Backend Developer"
+description: "Generates backend code (APIs, databases, services)"
+
+role:
+  title: "Backend Developer"
+  system_prompt_ref: "prompts/backend_dev.md"
+  personality: "systematic, security-conscious, performance-minded"
+
+skills:
+  - python
+  - fastapi
+  - nodejs
+  - postgresql
+  - redis
+  - docker
+  - api_design
+  - authentication
+
+tools:
+  - filesystem.read_write
+  - terminal.execute
+  - sandbox.execute
+  - database
+
+memory:
+  scope: project
+  max_tokens: 10000
+  retention: session
+  rag_enabled: false
+
+permissions:
+  - artifact.read
+  - artifact.write
+  - sandbox.execute
+  - filesystem.write
+  - database.write
+
+model_preference:
+  - model: "claude-sonnet-4"
+    reason: "complex reasoning, API design"
+  - model: "gpt-4o"
+    reason: "fallback"
+  - model: "deepseek-coder"
+    reason: "cost-efficient code generation"
+
+cost_profile:
+  max_tokens_per_task: 50000
+  max_cost_per_task_usd: 1.50
+  max_retries: 2
+
+health:
+  check_interval: 30s
+  timeout: 600s
+  restart_policy: on_failure
+  max_consecutive_failures: 3
+
+inputs:
+  - type: architecture_spec
+    required: true
+    schema: "schemas/architecture-spec-v1.json"
+  - type: task_breakdown
+    required: true
+    schema: "schemas/task-breakdown-v1.json"
+
+outputs:
+  - type: code
+    schema: "schemas/code-v1.json"
+  - type: api_spec
+    schema: "schemas/api-spec-v1.json"
+  - type: build_report
+    schema: "schemas/build-report-v1.json"

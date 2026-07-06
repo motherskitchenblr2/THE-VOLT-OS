@@ -1,0 +1,65 @@
+{
+  "technologies": [
+    {
+      "name": "Flutter",
+      "category": "framework",
+      "maturity": "mature",
+      "pros": [
+        "Cross-platform from single codebase",
+        "Strong offline sync support via Hive/Drift",
+        "Hot reload for rapid development",
+        "Large ecosystem with pub.dev packages"
+      ],
+      "cons": [
+        "Larger binary size than native",
+        "Platform-specific features need native bridges",
+        "UI customization limited compared to native"
+      ],
+      "community_score": 9.0,
+      "license": "BSD-3"
+    },
+    {
+      "name": "Supabase",
+      "category": "database",
+      "maturity": "growing",
+      "pros": [
+        "Real-time subscriptions",
+        "Built-in auth and storage",
+        "PostgreSQL underneath with pgvector",
+        "Open source, self-hostable"
+      ],
+      "cons": [
+        "Newer platform, smaller ecosystem",
+        "Complex queries need raw SQL",
+        "Self-hosting requires infrastructure"
+      ],
+      "community_score": 8.0,
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "Hive",
+      "category": "database",
+      "maturity": "mature",
+      "pros": [
+        "Fast local NoSQL for offline storage",
+        "No native dependencies",
+        "Cross-platform consistent API",
+        "Type-safe with code generation"
+      ],
+      "cons": [
+        "No SQL query support",
+        "Not suitable for large datasets",
+        "Manual sync logic required"
+      ],
+      "community_score": 8.5,
+      "license": "Apache-2.0"
+    }
+  ],
+  "recommendation": "Flutter + Supabase (remote) + Hive (offline local cache)",
+  "rationale": "Flutter provides cross-platform capability, Supabase handles real-time backend with auth, Hive provides fast offline local storage. Sync layer bridges Hive↔Supabase.",
+  "alternatives_considered": [
+    "React Native + Firebase",
+    "Native iOS/Android + REST API",
+    "Flutter + Firebase"
+  ]
+}

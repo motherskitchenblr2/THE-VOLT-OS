@@ -1,0 +1,70 @@
+name: "memory_manager"
+type: agent
+version: "1.0.0"
+api_version: "volt/v1"
+display_name: "Memory Manager"
+description: "Memory lifecycle, context management, knowledge retrieval"
+
+role:
+  title: "Memory Manager"
+  system_prompt_ref: "prompts/memory_manager.md"
+  personality: "organized, efficient, context-aware"
+
+skills:
+  - context_management
+  - rag_retrieval
+  - memory_organization
+  - summarization
+  - retention_policy
+
+tools:
+  - database.read_write
+  - vector_search
+  - filesystem.read_write
+
+memory:
+  scope: org
+  max_tokens: 16000
+  retention: persistent
+  rag_enabled: true
+
+permissions:
+  - artifact.read
+  - artifact.write
+  - memory.read
+  - memory.write
+  - database.read
+  - database.write
+
+model_preference:
+  - model: "gpt-4o"
+    reason: "summarization quality"
+  - model: "claude-sonnet-4"
+    reason: "fallback"
+  - model: "qwen"
+    reason: "cost-efficient"
+
+cost_profile:
+  max_tokens_per_task: 20000
+  max_cost_per_task_usd: 0.30
+  max_retries: 1
+
+health:
+  check_interval: 60s
+  timeout: 300s
+  restart_policy: on_failure
+  max_consecutive_failures: 5
+
+inputs:
+  - type: context
+    required: false
+    schema: "schemas/context-v1.json"
+  - type: memory_query
+    required: false
+    schema: "schemas/memory-query-v1.json"
+
+outputs:
+  - type: memory_context
+    schema: "schemas/memory-context-v1.json"
+  - type: knowledge_summary
+    schema: "schemas/knowledge-summary-v1.json"

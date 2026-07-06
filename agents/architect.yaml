@@ -1,0 +1,78 @@
+name: "architect"
+type: agent
+version: "1.0.0"
+api_version: "volt/v1"
+display_name: "Architect"
+description: "System design, architecture decisions, technology selection, task breakdown"
+
+role:
+  title: "System Architect"
+  system_prompt_ref: "prompts/architect.md"
+  personality: "analytical, decisive, pragmatic"
+
+skills:
+  - system_design
+  - tech_selection
+  - task_planning
+  - risk_assessment
+  - api_design
+  - security_design
+
+tools:
+  - filesystem.read_write
+  - terminal.read_only
+  - web_search
+  - web_fetch
+
+memory:
+  scope: project
+  max_tokens: 12000
+  retention: persistent
+  rag_enabled: true
+
+permissions:
+  - artifact.read
+  - artifact.write
+  - sandbox.execute
+  - memory.read
+  - memory.write
+
+model_preference:
+  - model: "claude-sonnet-4"
+    reason: "architecture reasoning, long context"
+  - model: "gpt-4o"
+    reason: "fallback"
+  - model: "qwen"
+    reason: "cost-efficient code-adjacent reasoning"
+
+cost_profile:
+  max_tokens_per_task: 50000
+  max_cost_per_task_usd: 1.00
+  max_retries: 2
+
+health:
+  check_interval: 30s
+  timeout: 600s
+  restart_policy: on_failure
+  max_consecutive_failures: 3
+
+inputs:
+  - type: requirements
+    required: true
+    schema: "schemas/requirements-v1.json"
+  - type: tech_research
+    required: true
+    schema: "schemas/tech-research-v1.json"
+  - type: feasibility_report
+    required: true
+    schema: "schemas/feasibility-report-v1.json"
+
+outputs:
+  - type: architecture_spec
+    schema: "schemas/architecture-spec-v1.json"
+  - type: risk_assessment
+    schema: "schemas/risk-assessment-v1.json"
+  - type: tech_selection
+    schema: "schemas/tech-selection-v1.json"
+  - type: task_breakdown
+    schema: "schemas/task-breakdown-v1.json"

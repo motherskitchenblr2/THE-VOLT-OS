@@ -1,0 +1,81 @@
+{
+  "functional": [
+    {
+      "id": "FR-001",
+      "description": "Build a Flutter app for restaurant management with offline sync",
+      "priority": "must_have",
+      "acceptance_criteria": [
+        "App runs on iOS and Android",
+        "Offline data syncs when connectivity resumes",
+        "Restaurant owners can manage menu, orders, and reservations"
+      ]
+    },
+    {
+      "id": "FR-002",
+      "description": "Menu management with categories, items, pricing, and availability",
+      "priority": "must_have",
+      "acceptance_criteria": [
+        "CRUD operations for menu items",
+        "Category-based organization",
+        "Real-time availability toggle"
+      ]
+    },
+    {
+      "id": "FR-003",
+      "description": "Order management with real-time status tracking",
+      "priority": "must_have",
+      "acceptance_criteria": [
+        "Customers can place orders",
+        "Kitchen receives order notifications",
+        "Order status updates in real-time"
+      ]
+    },
+    {
+      "id": "FR-004",
+      "description": "Reservation system with table management",
+      "priority": "should_have",
+      "acceptance_criteria": [
+        "Customers can book tables",
+        "Capacity-aware scheduling",
+        "Automated confirmation"
+      ]
+    },
+    {
+      "id": "FR-005",
+      "description": "Dashboard with analytics and reporting",
+      "priority": "should_have",
+      "acceptance_criteria": [
+        "Daily/weekly/monthly sales reports",
+        "Popular items ranking",
+        "Revenue visualization"
+      ]
+    }
+  ],
+  "non_functional": [
+    {
+      "category": "performance",
+      "description": "App response time under 200ms for local operations",
+      "target": "200ms"
+    },
+    {
+      "category": "security",
+      "description": "Authentication required for all mutations",
+      "target": "Clerk JWT"
+    },
+    {
+      "category": "scalability",
+      "description": "Support 1000 concurrent users",
+      "target": "1000"
+    },
+    {
+      "category": "accessibility",
+      "description": "WCAG 2.1 AA compliance",
+      "target": "AA"
+    }
+  ],
+  "constraints": [
+    "Flutter for cross-platform mobile",
+    "Offline-first architecture required",
+    "Must support both iOS and Android"
+  ]
+}

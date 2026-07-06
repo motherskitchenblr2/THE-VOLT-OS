@@ -1,0 +1,69 @@
+name: "sentinel"
+type: agent
+version: "1.0.0"
+api_version: "volt/v1"
+display_name: "Sentinel"
+description: "Error handling, auto-fix, security scanning, compliance"
+
+role:
+  title: "Security Engineer"
+  system_prompt_ref: "prompts/sentinel.md"
+  personality: "vigilant, thorough, risk-aware"
+
+skills:
+  - sast
+  - secret_scanning
+  - dependency_audit
+  - license_check
+  - auto_fix
+  - prompt_injection_detection
+  - compliance_check
+
+tools:
+  - filesystem.read
+  - terminal.execute
+  - sandbox.execute
+
+memory:
+  scope: project
+  max_tokens: 8000
+  retention: persistent
+  rag_enabled: false
+
+permissions:
+  - artifact.read
+  - artifact.write
+  - sandbox.execute
+  - terminal.execute
+
+model_preference:
+  - model: "gpt-4o"
+    reason: "security pattern recognition"
+  - model: "claude-sonnet-4"
+    reason: "fallback"
+
+cost_profile:
+  max_tokens_per_task: 30000
+  max_cost_per_task_usd: 0.60
+  max_retries: 1
+
+health:
+  check_interval: 30s
+  timeout: 600s
+  restart_policy: on_failure
+  max_consecutive_failures: 3
+
+inputs:
+  - type: code
+    required: true
+    schema: "schemas/code-v1.json"
+  - type: architecture_spec
+    required: true
+    schema: "schemas/architecture-spec-v1.json"
+  - type: test_report
+    required: false
+    schema: "schemas/test-report-v1.json"
+
+outputs:
+  - type: security_report
+    schema: "schemas/security-report-v1.json"
