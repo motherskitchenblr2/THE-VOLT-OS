@@ -6,6 +6,8 @@ from src.api.pipelines import router as pipelines_router
 from src.api.memory import router as memory_router
 from src.api.observability import router as observability_router
 from src.api.artifacts import router as artifacts_router
+from src.api.deployment import router as deployment_router
+from src.auth.middleware import ClerkAuthMiddleware
 from src.core.database import engine, Base
 
 app = FastAPI(
@@ -14,6 +16,10 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# Auth middleware
+app.add_middleware(ClerkAuthMiddleware)
+
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -28,6 +34,7 @@ app.include_router(pipelines_router)
 app.include_router(memory_router)
 app.include_router(observability_router)
 app.include_router(artifacts_router)
+app.include_router(deployment_router)
 
 
 @app.get("/health")
